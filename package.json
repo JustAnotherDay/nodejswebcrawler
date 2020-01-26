@@ -1,0 +1,29 @@
+{
+  "name": "nodejscrawler",
+  "version": "1.0.0",
+  "description": "lotto result crawler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "justanotherday",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
+    "jquery": "^3.4.1",
+    "mongoose": "^5.8.7",
+    "morgan": "^1.9.1",
+    "nexmo": "^2.5.3",
+    "node-cron": "^2.0.3",
+    "nodemon": "^2.0.2",
+    "pino": "^5.16.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  },
+  "devDependencies": {}
+}
