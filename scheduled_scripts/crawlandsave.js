@@ -17,7 +17,7 @@ module.exports.CrawlAndSave = function () {
         })
         .then(() => {
             console.log("Success");
-            return "success";
+            mongoose.connection.close()
         }).catch(err => {
             console.log(err);
             return "fail";
