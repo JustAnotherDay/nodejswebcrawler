@@ -1,22 +1,33 @@
 const crawler = require("./webcrawler");
 const sms = require("./smsSender");
-const LottoResult = require("../models/lottoResultModel");
+const LottoResult = require("../models/lotto_result");
+const LottoCategory = require("../models/lotto_category");
+
+function GetResult() {
+  console.log(
+    "RETRIEVING Current Lotto Result from official website " + new Date()
+  );
+
+  return crawler.GetLottoResult().then((result) => {
+     return result;
+  });
+}
 
 function GetResultAndSendMessageTo(sendTo) {
   crawler
     .GetLottoResult()
-    .then(result => {
+    .then((result) => {
       const messageContent = sms.arrayToString(result);
 
-      result.map(result => {
+      result.map((result) => {
         SaveResultToDb(result);
       });
-      
+
       const sendMessageTo = sendTo;
       //console.log(messageContent);
       sms.sendMessage(sendMessageTo, messageContent);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("GetLottoResult Error", err);
     });
 }
@@ -24,35 +35,47 @@ function GetResultAndSendMessageTo(sendTo) {
 function GetResultAndSaveToDb() {
   crawler
     .GetLottoResult()
-    .then(result => {
-      result.map(result => {
-        SaveResultToDb(result);
+    .then((result) => {
+      result.map((result) => {
+        return SaveResultToDb(result);
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("GetLottoResult Error", err);
     });
 }
 
 function SaveResultToDb(lottoResult) {
-  LottoResult.findOne({
-    category: lottoResult.category,
-    date: lottoResult.date
-  })
-    .then(result => {
-      if (!result) {
-        //insert
-        const result = new LottoResult(lottoResult);
-        console.log("New LottoResult", lottoResult);
-        result.save().then(result => {
-          return {
-            result
-          };
-        });
-      }
+  console.log("New LottoResult", lottoResult.category);
+
+  LottoCategory.findOne({
+    pcso_search_string: lottoResult.category,
+  }).then((result) => {
+    var categoryResult = result;
+    LottoResult.findOne({
+      category: categoryResult._id,
+      date: lottoResult.date,
     })
-    .catch(err => {
-      console.log("Error", err);
-    });
+      .then((result) => {
+        if (!result) {
+          //insert
+
+          lottoResult.category = categoryResult._id;
+          new LottoResult(lottoResult).save().then((result) => {
+            return {
+              result
+            };
+          });
+          // newResult.save().then((result) => {
+          //   return {
+          //     result,
+          //   };
+          // });
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  });
 }
-module.exports = { GetResultAndSendMessageTo, GetResultAndSaveToDb };
+module.exports = { GetResult, GetResultAndSendMessageTo, GetResultAndSaveToDb };

@@ -6,24 +6,30 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seed": "node seeder.js"
   },
   "author": "justanotherday",
   "license": "ISC",
   "dependencies": {
+    "cachegoose": "^8.0.0",
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
+    "express-routes-versioning": "^1.0.1",
     "jquery": "^3.4.1",
     "mongoose": "^5.8.7",
+    "mongoose-seed": "^0.6.0",
     "morgan": "^1.9.1",
     "nexmo": "^2.5.3",
     "node-cron": "^2.0.3",
     "nodemon": "^2.0.2",
     "pino": "^5.16.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {}
 }
