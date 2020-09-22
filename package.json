@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
     "express-routes-versioning": "^1.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mongoose": "^5.8.7",
     "mongoose-seed": "^0.6.0",
     "morgan": "^1.9.1",
