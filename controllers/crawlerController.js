@@ -1,6 +1,4 @@
 const crawler = require("../services/webcrawler");
-const LottoResult = require("../models/lotto_result");
-const LottoCategory = require("../models/lotto_category");
 
 exports.GetLottoFromPcso = (req, res) => {
   console.log(
@@ -21,7 +19,7 @@ exports.CrawlAndSave = (req, res) => {
       .GetLottoResult()
       .then((lotto_results) => {
         lotto_results.map((result) => {
-          return SaveResultToDb(result);
+          return crawler.SaveResultToDb(result);
         });
       })
       .then(() => {
@@ -33,22 +31,3 @@ exports.CrawlAndSave = (req, res) => {
 
 };
 
-SaveResultToDb = (lottoResult) => {
-  console.log("New LottoResult", lottoResult);
-
-  return LottoResult.findOne({
-    category: lottoResult.category,
-    date: lottoResult.date,
-  })
-    .then((result) => {
-      if (!result) {
-        //insert
-        new LottoResult(lottoResult).save().then((result) => {
-          return result;
-        });
-      }
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-};

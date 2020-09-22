@@ -1,5 +1,4 @@
 const Category = require("../models/lotto_category");
-const cachegoose = require('cachegoose');
 
 
 function GetCategories(req = null) {
@@ -8,7 +7,7 @@ function GetCategories(req = null) {
   
   return Category.find({ ...queryFilters })
   .cache(0, 'CATEGORIES')
-  .exec()
+  .exec();
 }
 
 function GetCategoriesByDay(req) {

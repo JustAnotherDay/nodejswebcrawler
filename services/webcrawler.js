@@ -2,6 +2,7 @@ const rp = require("request-promise");
 var cheerio = require("cheerio");
 const log = require("./logger");
 const { GetCategories } = require("../services/category_service");
+const LottoResult = require("../models/lotto_result");
 
 
 var pcso = {
@@ -109,4 +110,25 @@ function IsExists(currentList, item) {
   }
 }
 
-module.exports = { GetLottoResult };
+
+SaveResultToDb = (lottoResult) => {
+  console.log("New LottoResult", lottoResult);
+
+  return LottoResult.findOne({
+    category: lottoResult.category,
+    date: lottoResult.date,
+  })
+    .then((result) => {
+      if (!result) {
+        //insert
+        new LottoResult(lottoResult).save().then((result) => {
+          return result;
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("Error", err);
+    });
+};
+
+module.exports = { GetLottoResult, SaveResultToDb };
