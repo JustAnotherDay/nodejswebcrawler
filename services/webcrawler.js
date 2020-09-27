@@ -8,8 +8,10 @@ const LottoResult = require("../models/lotto_result");
 var pcso = {
   getPageContent: function () {
     const url = "https://www.pcso.gov.ph/SearchLottoResult.aspx";
+    const customHeaderRequest = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'};
     var options = {
       uri: url,
+      headers: customHeaderRequest,
       transform: function (body) {
         return cheerio.load(body);
       },
