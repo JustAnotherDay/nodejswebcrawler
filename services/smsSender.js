@@ -1,8 +1,8 @@
 const Nexmo = require("nexmo");
 
 const nexmo = new Nexmo({
-  apiKey: "e0147795",
-  apiSecret: "MYzLQYjv61jrxiwA"
+  apiKey: "",
+  apiSecret: ""
 });
 
 function sendMessage(sendTo, msgContent) {
